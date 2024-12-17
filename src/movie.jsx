@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
+import { MovieContext } from "./context/MovieContext";
 
 const APP_ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
 const options = {
@@ -13,7 +14,7 @@ const options = {
 
 export default function Movie(){
     const params = useParams();
-    const [movies, setMovies] = useState(null);
+    const [movies, setMovies] = useContext(MovieContext);
     const [trailer, setTrailer] = useState(null);
 
     async function fetchMovies(){

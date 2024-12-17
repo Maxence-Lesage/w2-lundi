@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { MovieContext } from './context/MovieContext';
 
 const APP_ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
 const options = {
@@ -13,7 +14,7 @@ const options = {
 
 function App() {
 
-  const [movies, setMovies] = useState(null);
+  const [movies, setMovies] = useContext(MovieContext);
   const ref = useRef();
 
   async function fetchMovies(e){
@@ -49,7 +50,7 @@ function App() {
         </form>
       </nav>
       <div className='flex flex-wrap gap-12'>
-        {movies && movies.map((movie) => (
+        {movies && movies.length > 1 && movies.map((movie) => (
           <Link to={`/movie/${movie.id}`}>
           <div className='movie_card bg-blue-300/10 p-2' key={movie.id}>
             <img className='w-full' src={`https://image.tmdb.org/t/p/w300/${movie.file_path}`} alt="" />
