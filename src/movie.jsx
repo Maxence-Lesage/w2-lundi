@@ -55,21 +55,23 @@ export default function Movie(){
     }, [movies])
 
     return(
-        <main className="min-h-screen">
-          <nav className='flex items-center gap-[150px] p-4 bg-red-300/5 border border-red-300/50 mb-12'>
+        <main className="min-h-screen flex flex-col">
+          <nav className='flex items-center gap-[150px] p-4 bg-red-300/5 border border-red-300/50'>
             <Link to={"/"}><h1>Movies</h1></Link>
           </nav>
             {movies &&
-              <div className='bg-blue-300/10 p-2 w-screen flex gap-5 text-2xl'>
-                <img className='w-[300px]' src={`https://image.tmdb.org/t/p/w500/${movies.file_path}`} alt="" />
+            <div className="w-screen grow p-2 flex gap-[200px] text-2xl">
+              <div className='flex flex-col gap-5'>
                 <div>
-                  <h2 className='truncate'>{movies.title}</h2>
+                  <h2 className='truncate text-4xl'>{movies.title}</h2>
                   <div>{movies.tagline}</div>
                   <div>⭐ {movies.rating || "N/A"}</div>
                 </div>
-                {trailer && 
-            <iframe width="560" height="315" src={`https://www.youtube.com/embed/${trailer}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
-            }
+                <img className='w-[300px]' src={`https://image.tmdb.org/t/p/w500/${movies.file_path}`} alt="" />
+              </div>
+              {trailer && 
+                <iframe className="grow" src={`https://www.youtube.com/embed/${trailer}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+              }
               </div>
             }
         </main>
