@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
 import { MovieContext } from "./context/MovieContext";
+import Navbar from "./components/Navbar";
 
 const APP_ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
 const options = {
@@ -56,9 +57,7 @@ export default function Movie(){
 
     return(
         <main className="min-h-screen flex flex-col">
-          <nav className='flex items-center gap-[150px] p-4 bg-red-300/5 border border-red-300/50'>
-            <Link to={"/"}><h1>Movies</h1></Link>
-          </nav>
+          <Navbar/>
             {movies &&
             <div className="w-screen grow p-2 flex gap-[200px] text-2xl">
               <div className='flex flex-col gap-5'>
