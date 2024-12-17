@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import './App.css'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const APP_ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
 const options = {
@@ -41,18 +41,22 @@ function App() {
 
   return (
     <>
-      <h1>Movies</h1>
-      <form action="">
-        <input ref={ref} type="search" placeholder="The Wild Robot" id="form_search" />
-        <input type="submit" value="Rechercher" onClick={(e) => fetchMovies(e)}/>
-      </form>
-      <div className='container'>
+      <nav className='flex items-center gap-[150px] p-4 bg-red-300/5 border border-red-300/50 mb-12'>
+        <Link to={"/"}><h1>Movies</h1></Link>
+        <form className='flex gap-[20px]' action="">
+          <input className='h-[50px] px-[10px] min-w-[300px] border border-blue-300/50' ref={ref} type="search" placeholder="The Wild Robot..." id="form_search" />
+          <input className='h-[50px] min-w-[180px] border bg-blue-300/15 border-blue-300/50 cursor-pointer' type="submit" value="Rechercher" onClick={(e) => fetchMovies(e)}/>
+        </form>
+      </nav>
+      <div className='flex flex-wrap gap-12'>
         {movies && movies.map((movie) => (
-          <div className='movie_card' key={movie.id}>
-            <img src={`https://image.tmdb.org/t/p/w300/${movie.file_path}`} alt="" />
-            <h2>{movie.title}</h2>
-            <div>Note: {movie.rating || "N/A"}</div>
+          <Link to={`/movie/${movie.id}`}>
+          <div className='movie_card bg-blue-300/10 p-2' key={movie.id}>
+            <img className='w-full' src={`https://image.tmdb.org/t/p/w300/${movie.file_path}`} alt="" />
+            <h2 className='truncate'>{movie.title}</h2>
+            <div>⭐ {movie.rating || "N/A"}</div>
           </div>
+          </Link>
         ))}
       </div>
     </>
