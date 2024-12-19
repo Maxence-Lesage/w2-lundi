@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react"
+import NewPlaylistForm from "../components/Playlist/NewPlaylistForm";
 
 export default function Test(){
 
@@ -25,6 +26,7 @@ export default function Test(){
                     <p>{playlist.name}</p>
                 </div>
             ))}
+            <NewPlaylistForm/>
         </>
     )
 }
