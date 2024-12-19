@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
 export default function NewPlaylistForm() {
@@ -7,6 +7,7 @@ export default function NewPlaylistForm() {
   const [genres, setGenres] = useState([]);
   const [version, setVersion] = useState("");
   const [responseMessage, setResponseMessage] = useState(null);
+  const [musics, setMusics] = useState(null);
 
   const ref = useRef();
 
@@ -44,6 +45,20 @@ export default function NewPlaylistForm() {
     }
   }
 
+  async function getAllMusics(){
+    const response = await axios.get("http://localhost:3002/musics",{
+          headers: {
+            accept: "application/json",
+          },
+        }
+      );
+    setMusics(response.data)
+  }
+
+  useEffect(() => {
+    getAllMusics();
+  }, [])
+
   return (
     <form className="p-4 m-4 border border-white" ref={ref} onSubmit={addNewPlaylist}>
       <label htmlFor="f_anp_name">Nom:</label>
@@ -58,35 +73,18 @@ export default function NewPlaylistForm() {
       <fieldset>
         <legend>Musiques:</legend>
 
-        <div>
-          <input
-            type="checkbox"
-            id="song_1"
-            name="song_1"
-            onChange={(e) => handleCheckboxChange(e, setList)}
-          />
-          <label htmlFor="song_1">Smells like teen spirits</label>
-        </div>
+        {musics && musics.map((music, index) => (
+            <div key={index}>
+                <input
+                type="checkbox"
+                id={music._id}
+                name={music._id}
+                onChange={(e) => handleCheckboxChange(e, setList)}
+                />
+                <label htmlFor={music._id}>{music.name}</label>
+          </div>
+        ))}
 
-        <div>
-          <input
-            type="checkbox"
-            id="song_2"
-            name="song_2"
-            onChange={(e) => handleCheckboxChange(e, setList)}
-          />
-          <label htmlFor="song_2">Stay with me</label>
-        </div>
-
-        <div>
-          <input
-            type="checkbox"
-            id="song_3"
-            name="song_3"
-            onChange={(e) => handleCheckboxChange(e, setList)}
-          />
-          <label htmlFor="song_3">Flickering Streetlights</label>
-        </div>
       </fieldset>
 
       <fieldset>
